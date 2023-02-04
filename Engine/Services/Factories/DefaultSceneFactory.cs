@@ -9,6 +9,7 @@ public class DefaultSceneFactory : ISceneFactory
 {
     public Scene Create(int width, int height)
     {
-        return new DefaultScene(new FromFileShaderLoader(), new FromFileTextureLoader(), width / (float)height);
+        return new DefaultScene(new FromFileShaderLoader(), new FromFileTextureLoader(), new FromFileObjLoader(),
+            width / (float)height);
     }
 }

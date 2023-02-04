@@ -14,6 +14,7 @@ public partial class DefaultScene
     private LightModel _lightModel = null!;
     private PlateModel _plateModel = null!;
     private BoxTexturedModel _boxTexturedModel = null!;
+    private ObjModel _objModel = null!;
 
     private MainShader _mainShader = null!;
     private LightShader _lightShader = null!;
@@ -28,6 +29,7 @@ public partial class DefaultScene
         InitializeBox();
         InitializePlate();
         IntializeTexturedBox();
+        IntializeObjModel();
         //IntializeSkyBox();
 
         _lightModel = new LightModel(_mainShader);
@@ -105,5 +107,17 @@ public partial class DefaultScene
         _boxTexturedModel.Initialize();
         _boxTexturedModel.Position = new Vector3(5, 0, 0);
         Models.Add(_boxTexturedModel);
+    }
+
+    private void IntializeObjModel()
+    {
+        var material = new Material(new Vector3(0.2775f, 0.2775f, 0.2775f), new Vector3(0.2775f, 0.2775f, 0.2775f),
+            new Vector3(0.4739f, 0.4739f, 0.4739f), 50);
+        var data = _objLoader.Get("Rose.obj");
+        _objModel = new ObjModel(new LightedDots(data.Vertices, data.Normals, data.Indexes), material, _lightShader);
+        _objModel.Initialize();
+        _objModel.Position = new Vector3(3, 5, 2);
+        _objModel.Scale = new Vector3(0.2f, 0.2f, 0.2f);
+        Models.Add(_objModel);
     }
 }

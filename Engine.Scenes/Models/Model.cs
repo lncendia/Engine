@@ -59,7 +59,7 @@ public abstract class Model : IDisposable
 
 
     protected int DataBuffer;
-    protected int IndexesBuffer;
+    protected int? IndexesBuffer;
 
     protected Model(Dots coordinates, Vector3 color, Shader shader)
     {
@@ -67,7 +67,7 @@ public abstract class Model : IDisposable
         Shader = shader;
         Coordinates = coordinates.Coordinates;
         Indexes = coordinates.Indexes;
-        CountElements = MathHelper.Max(Coordinates.Length, Indexes.Length);
+        CountElements = Indexes?.Length ?? Coordinates.Length / 3;
     }
 
     protected bool IsBuffersSet;
@@ -84,12 +84,15 @@ public abstract class Model : IDisposable
         GL.BufferData(BufferTarget.ArrayBuffer, Coordinates!.Length * sizeof(float), Coordinates,
             BufferUsageHint.StaticDraw);
 
-        IndexesBuffer = GL.GenBuffer();
-        GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexesBuffer);
-        GL.BufferData(BufferTarget.ElementArrayBuffer, CountElements * sizeof(uint), Indexes,
-            BufferUsageHint.StaticDraw);
+        if (Indexes != null)
+        {
+            IndexesBuffer = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexesBuffer.Value);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, CountElements * sizeof(uint), Indexes,
+                BufferUsageHint.StaticDraw);
+        }
 
-        GL.VertexAttribPointer(Shader.Position, 3, VertexAttribPointerType.Float, false, 0,0);
+        GL.VertexAttribPointer(Shader.Position, 3, VertexAttribPointerType.Float, false, 0, 0);
         GL.EnableVertexAttribArray(Shader.Position);
 
         Coordinates = null;
@@ -105,7 +108,14 @@ public abstract class Model : IDisposable
         Shader.SetMatrix4(Shader.MMatrix, modelMatrix);
         Shader.SetVector3(Shader.Color, Color);
         GL.BindVertexArray(VertexArray);
-        GL.DrawElements(PrimitiveType.Triangles, CountElements, DrawElementsType.UnsignedInt, 0);
+        if (IndexesBuffer.HasValue)
+        {
+            GL.DrawElements(PrimitiveType.Triangles, CountElements, DrawElementsType.UnsignedInt, 0);
+        }
+        else
+        {
+            GL.DrawArrays(PrimitiveType.Triangles, 0, CountElements);
+        }
     }
 
 
@@ -115,7 +125,7 @@ public abstract class Model : IDisposable
     {
         if (Disposed) return;
         GL.DeleteBuffer(DataBuffer);
-        GL.DeleteBuffer(IndexesBuffer);
+        if (IndexesBuffer.HasValue) GL.DeleteBuffer(IndexesBuffer.Value);
         GL.DeleteVertexArray(VertexArray);
         Disposed = true;
     }

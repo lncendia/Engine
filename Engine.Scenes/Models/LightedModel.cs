@@ -27,10 +27,9 @@ public abstract class LightedModel : Model
         if (IsBuffersSet) return;
         VertexArray = GL.GenVertexArray();
         GL.BindVertexArray(VertexArray);
-        Shader.Use();
         DataBuffer = GL.GenBuffer();
         var buffer = new List<float>();
-        for (var i = 0; i < CountElements; i += 3)
+        for (var i = 0; i < Coordinates!.Length; i += 3)
         {
             buffer.AddRange(Coordinates!.Skip(i).Take(3));
             buffer.AddRange(Normals!.Skip(i).Take(3));
@@ -40,10 +39,13 @@ public abstract class LightedModel : Model
         GL.BufferData(BufferTarget.ArrayBuffer, buffer.Count * sizeof(float), buffer.ToArray(),
             BufferUsageHint.StaticDraw);
 
-        IndexesBuffer = GL.GenBuffer();
-        GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexesBuffer);
-        GL.BufferData(BufferTarget.ElementArrayBuffer, CountElements * sizeof(uint), Indexes,
-            BufferUsageHint.StaticDraw);
+        if (Indexes != null)
+        {
+            IndexesBuffer = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexesBuffer.Value);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, CountElements * sizeof(uint), Indexes,
+                BufferUsageHint.StaticDraw);
+        }
 
         GL.VertexAttribPointer(Shader.Position, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
         GL.EnableVertexAttribArray(Shader.Position);
@@ -70,6 +72,13 @@ public abstract class LightedModel : Model
         Shader.SetVector3(Shader.Color, Color);
         Shader.SetFloat(Shader.M, M);
         GL.BindVertexArray(VertexArray);
-        GL.DrawElements(PrimitiveType.Triangles, CountElements, DrawElementsType.UnsignedInt, 0);
+        if (IndexesBuffer.HasValue)
+        {
+            GL.DrawElements(PrimitiveType.Triangles, CountElements, DrawElementsType.UnsignedInt, 0);
+        }
+        else
+        {
+            GL.DrawArrays(PrimitiveType.Triangles, 0, CountElements);
+        }
     }
 }

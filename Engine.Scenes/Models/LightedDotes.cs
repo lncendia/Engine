@@ -4,7 +4,7 @@ public class LightedDots : Dots
 {
     public float[] Normals { get; }
 
-    public LightedDots(float[] coordinates, float[] normals, uint[] indexes):base(coordinates, indexes)
+    public LightedDots(float[] coordinates, float[] normals, uint[]? indexes) : base(coordinates, indexes)
     {
         Normals = normals;
     }

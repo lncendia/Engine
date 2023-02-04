@@ -4,7 +4,29 @@
     <projectFile>Engine/Engine.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c115434-5de5-426f-8555-1416ba2d9bcc" name="Changes" comment="" />
+    <list default="true" id="0c115434-5de5-426f-8555-1416ba2d9bcc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Engine.Scenes/ModelsExamples/ObjModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Resources/Models/Rose.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Resources/Models/Rose.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Services/Abstractions/IMtlLoader.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Services/Abstractions/IObjlLoader.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Services/Abstractions/Models/ObjData.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Services/Realizations/FromFileMtlLoader.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engine/Services/Realizations/FromFileObjLoader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Engine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Engine/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine.Scenes/Models/Dotes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.Scenes/Models/Dotes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine.Scenes/Models/LightedDotes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.Scenes/Models/LightedDotes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine.Scenes/Models/LightedModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.Scenes/Models/LightedModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine.Scenes/Models/Model.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.Scenes/Models/Model.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine.Scenes/Models/TexturedDotes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.Scenes/Models/TexturedDotes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine.Scenes/Models/TexturedModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.Scenes/Models/TexturedModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine.Scenes/ModelsExamples/BoxTexturedModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.Scenes/ModelsExamples/BoxTexturedModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine.Scenes/Shaders/LightedShader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.Scenes/Shaders/LightedShader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Engine.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Engine.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Scenes/DefaultScene.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Scenes/DefaultScene.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Scenes/DefaultScene.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Scenes/DefaultScene.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Services/Factories/DefaultSceneFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Services/Factories/DefaultSceneFactory.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +61,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectId" id="2KxwIyYcTRzs58fnOj5XvgFo5PK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -103,33 +127,16 @@
       <workItem from="1675283356435" duration="8274000" />
       <workItem from="1675331354400" duration="4426000" />
       <workItem from="1675428895388" duration="3343000" />
+      <workItem from="1675508118502" duration="11513000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Engine.Scenes/Models/TexturedModel.cs</url>
-          <line>53</line>
-          <properties documentPath="D:\Projects\Engine\Engine.Scenes\Models\TexturedModel.cs" initialLine="53" containingFunctionPresentation="method 'Initialize'">
-            <startOffsets>
-              <option value="1969" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2099" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

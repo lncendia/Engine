@@ -126,7 +126,6 @@ public class BoxTexturedModel : TexturedModel
     public override void Draw()
     {
         if (!IsBuffersSet) throw new Exception();
-        Shader.Use();
         Shader.SetInt(Shader.Sampler2DName, 0);
         GL.ActiveTexture(TextureUnit.Texture0);
         GL.BindTexture(TextureTarget.Texture2D, TexturesIds.First());

@@ -5,9 +5,9 @@ namespace Engine.Scenes.Models;
 
 public abstract class TexturedModel : LightedModel
 {
-    protected List<Texture> Textures = new();
+    protected readonly List<Texture> Textures = new();
 
-    protected List<int> TexturesIds = new();
+    protected readonly List<int> TexturesIds = new();
 
     protected float[]? TextureCoordinates;
 
@@ -25,24 +25,26 @@ public abstract class TexturedModel : LightedModel
         if (IsBuffersSet) return;
         VertexArray = GL.GenVertexArray();
         GL.BindVertexArray(VertexArray);
-        Shader.Use();
         DataBuffer = GL.GenBuffer();
         var buffer = new List<float>();
-        for (var i = 0; i < CountElements/3; i++)
+        for (var i = 0; i < Coordinates!.Length / 3; i++)
         {
-            buffer.AddRange(Coordinates!.Skip(i*3).Take(3));
-            buffer.AddRange(Normals!.Skip(i*3).Take(3));
-            buffer.AddRange(TextureCoordinates!.Skip(i*2).Take(2));
+            buffer.AddRange(Coordinates!.Skip(i * 3).Take(3));
+            buffer.AddRange(Normals!.Skip(i * 3).Take(3));
+            buffer.AddRange(TextureCoordinates!.Skip(i * 2).Take(2));
         }
 
         GL.BindBuffer(BufferTarget.ArrayBuffer, DataBuffer);
         GL.BufferData(BufferTarget.ArrayBuffer, buffer.Count * sizeof(float), buffer.ToArray(),
             BufferUsageHint.StaticDraw);
 
-        IndexesBuffer = GL.GenBuffer();
-        GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexesBuffer);
-        GL.BufferData(BufferTarget.ElementArrayBuffer, CountElements * sizeof(uint), Indexes,
-            BufferUsageHint.StaticDraw);
+        if (Indexes != null)
+        {
+            IndexesBuffer = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexesBuffer.Value);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, CountElements * sizeof(uint), Indexes,
+                BufferUsageHint.StaticDraw);
+        }
 
         GL.VertexAttribPointer(Shader.Position, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
         GL.EnableVertexAttribArray(Shader.Position);
@@ -68,10 +70,8 @@ public abstract class TexturedModel : LightedModel
     protected override void Dispose(bool disposing)
     {
         if (Disposed) return;
-        GL.DeleteBuffer(DataBuffer);
-        GL.DeleteBuffer(IndexesBuffer);
-        GL.DeleteVertexArray(VertexArray);
         GL.DeleteTextures(TexturesIds.Count, TexturesIds.ToArray());
+        base.Dispose(disposing);
         Disposed = true;
     }
 }

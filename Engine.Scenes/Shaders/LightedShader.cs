@@ -1,6 +1,3 @@
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
-
 namespace Engine.Scenes.Shaders;
 
 public abstract class LightedShader : Shader
