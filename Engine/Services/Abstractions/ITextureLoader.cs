@@ -1,4 +1,4 @@
-using Texture = Engine.Scenes.Models.Texture;
+using Texture = Engine.Scenes.Models.TexturedModel.Texture;
 
 namespace Engine.Services.Abstractions;
 

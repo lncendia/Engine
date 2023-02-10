@@ -1,6 +1,5 @@
-using System.Drawing;
-using Engine.Scenes.Models;
-using Engine.Scenes.Shaders;
+using Engine.Scenes.Models.DefaultModel;
+using Engine.Scenes.Models.DefaultModel.DefaultShader;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
@@ -12,12 +11,7 @@ public abstract class Scene : IDisposable
     protected readonly List<Model> Models = new();
     protected readonly List<Shader> Shaders = new();
 
-    protected Scene(Camera camera)
-    {
-        Camera = camera;
-        GL.ClearColor(Color.DarkCyan);
-        GL.Enable(EnableCap.DepthTest);
-    }
+    protected Scene(Camera camera) => Camera = camera;
 
     private const float CameraSpeed = 2.5f;
     private const float Sensitivity = 0.1f;
@@ -74,19 +68,15 @@ public abstract class Scene : IDisposable
     public virtual void ResizeScene(int width, int height)
     {
         GL.Viewport(0, 0, width, height);
-        Camera.AspectRatio = width / (float)height;
+        Camera.AspectRatio = width / (float) height;
     }
 
 
     public virtual void Draw()
     {
-        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-        foreach (var shader in Shaders)
-        {
-            shader.SetMatrix4(shader.VMatrix, Camera.ViewMatrix);
-            shader.SetMatrix4(shader.PMatrix, Camera.ProjectionMatrix);
-        }
-        Models.ForEach(x => x.Draw());
+        var view = Camera.ViewMatrix;
+        var project = Camera.ProjectionMatrix;
+        Models.ForEach(x => x.Draw(view, project));
     }
 
     protected bool Disposed;

@@ -1,5 +1,5 @@
-using Engine.Scenes.Models;
-using Engine.Scenes.Shaders;
+using Engine.Scenes.Models.LightedModel;
+using Engine.Scenes.Models.LightedModel.LightShader;
 
 namespace Engine.Scenes.ModelsExamples;
 
@@ -11,8 +11,8 @@ public class PlateModel : LightedModel
 
     private new static float[] Normals => new float[] { 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0 };
 
-    public new LightedShader Shader => (LightedShader)base.Shader;
-    public PlateModel(Material material, LightedShader shader) : base(new LightedDots(Coordinates, Normals, Indexes), material, shader)
+    public new LightShader Shader => (LightShader)base.Shader;
+    public PlateModel(Material material, LightShader shader) : base(new LightedDots(Coordinates, Normals, Indexes), material, shader)
     {
     }
 }

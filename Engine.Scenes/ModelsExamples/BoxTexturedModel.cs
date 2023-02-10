@@ -1,6 +1,6 @@
-using Engine.Scenes.Models;
-using Engine.Scenes.Shaders;
-using OpenTK.Graphics.OpenGL;
+using Engine.Scenes.Models.LightedModel;
+using Engine.Scenes.Models.TexturedModel;
+using Engine.Scenes.Models.TexturedModel.TextureShader;
 
 namespace Engine.Scenes.ModelsExamples;
 
@@ -28,10 +28,10 @@ public class BoxTexturedModel : TexturedModel
         1f, 1f, -1f,
         -1f, 1f, 1f,
         -1f, 1f, -1f,
-        1f, -1f, 1f,
-        1f, -1f, -1f,
-        -1f, -1f, 1f,
-        -1f, -1f, -1f
+        1f, -1f, 1f, //5 10
+        1f, -1f, -1f, //6 00
+        -1f, -1f, 1f, //7 11
+        -1f, -1f, -1f //8 01
     };
 
     private new static uint[] Indexes => new uint[]
@@ -84,56 +84,34 @@ public class BoxTexturedModel : TexturedModel
         0.0f, 1.0f,
         1.0f, 1.0f,
         1.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
         1.0f, 0.0f,
         1.0f, 1.0f,
-        1.0f, 0.0f,
         0.0f, 1.0f,
         0.0f, 0.0f,
         0.0f, 0.0f,
         0.0f, 1.0f,
         1.0f, 1.0f,
         1.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
         0.0f, 0.0f,
+
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+
+        1.0f, 1.0f,
         1.0f, 0.0f,
         0.0f, 1.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
         0.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f
     };
 
     private new static TexturedDotes Coordinates => new(Vertex, Normals, Indexes, TextureCoordinates);
 
-
-    protected override void InitializeTextures()
-    {
-        var texture = Textures.First();
-        var textureId = GL.GenTexture();
-
-        GL.ActiveTexture(TextureUnit.Texture0);
-        GL.BindTexture(TextureTarget.Texture2D, textureId);
-        GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, texture.Width, texture.Height, 0,
-            PixelFormat.Rgba, PixelType.UnsignedByte, texture.Data);
-        GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, texture.Width, texture.Height, 0,
-            PixelFormat.Rgba, PixelType.UnsignedByte, texture.Data);
-        TexturesIds.Add(textureId);
-    }
-
-    public override void Draw()
-    {
-        if (!IsBuffersSet) throw new Exception();
-        Shader.SetInt(Shader.Sampler2DName, 0);
-        GL.ActiveTexture(TextureUnit.Texture0);
-        GL.BindTexture(TextureTarget.Texture2D, TexturesIds.First());
-        base.Draw();
-    }
-
     public BoxTexturedModel(Material material, Texture texture,
-        TexturedShader shader) : base(Coordinates, material, new[] { texture }, shader)
+        TextureShader shader) : base(Coordinates, material, texture, shader)
     {
     }
 }

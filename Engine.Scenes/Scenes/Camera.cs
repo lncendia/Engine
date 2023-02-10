@@ -56,7 +56,7 @@ public class Camera
 
     public virtual Matrix4 ViewMatrix => Matrix4.LookAt(Position, Position + Front, Up);
 
-    public virtual Matrix4 ProjectionMatrix => Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, 0.01f, 100f);
+    public virtual Matrix4 ProjectionMatrix => Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, 0.01f, 500f);
 
     protected virtual void UpdateVectors()
     {

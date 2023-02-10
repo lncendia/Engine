@@ -1,29 +1,51 @@
-using System.Collections.Immutable;
 using Engine.Services.Abstractions.Models;
 using ObjLoader.Loader.Loaders;
+using OpenTK.Mathematics;
 using IObjLoader = Engine.Services.Abstractions.IObjLoader;
 
 namespace Engine.Services.Realizations;
 
 public class FromFileObjLoader : IObjLoader
 {
-    public ObjData Get(string name)
+    public List<ObjData> Get(string name)
     {
+        const string path = "Resources/Models";
+        var material = new MaterialStreamProvider(path);
         var objLoaderFactory = new ObjLoaderFactory();
-        var objLoader = objLoaderFactory.Create();
-        var fileStream = new FileStream($"Resources/Models/{name}", FileMode.Open);
+        var objLoader = objLoaderFactory.Create(material);
+        var fileStream = new FileStream(Path.Combine(path, name), FileMode.Open);
         var result = objLoader.Load(fileStream);
-        var indexes = result.Groups.SelectMany(x => x.Faces);
-        var data = new List<uint>();
-        foreach (var face in indexes)
+        List<ObjData> list = new List<ObjData>();
+        foreach (var group in result.Groups.Where(x => x.Faces.Count > 0))
         {
-            for (int i = 0; i < face.Count; i++)
+            var coords = new List<float>();
+            var normals = new List<float>();
+
+            foreach (var groupFace in group.Faces)
             {
-                data.Add(Convert.ToUInt32(face[i].VertexIndex));
+                for (int i = 0; i < groupFace.Count; i++)
+                {
+                    var vertex = result.Vertices[groupFace[i].VertexIndex - 1];
+                    coords.Add(vertex.X);
+                    coords.Add(vertex.Y);
+                    coords.Add(vertex.Z);
+                    var normal = result.Normals[groupFace[i].NormalIndex - 1];
+                    normals.Add(normal.X);
+                    normals.Add(normal.Y);
+                    normals.Add(normal.Z);
+                }
             }
+
+            var ambient = new Vector3(group.Material.AmbientColor.X, group.Material.AmbientColor.Y,
+                group.Material.AmbientColor.Z);
+            var diffuse = new Vector3(group.Material.DiffuseColor.X, group.Material.DiffuseColor.Y,
+                group.Material.DiffuseColor.Z);
+            var specular = new Vector3(group.Material.SpecularColor.X, group.Material.SpecularColor.Y,
+                group.Material.SpecularColor.Z);
+            var m = group.Material.SpecularCoefficient;
+            list.Add(new ObjData(coords.ToArray(), normals.ToArray(), ambient, diffuse, specular, m));
         }
 
-        return new ObjData(result.Vertices.SelectMany(x => new[] { x.X, x.Y, x.Z }).ToArray(),
-            result.Normals.SelectMany(x => new[] { x.X, x.Y, x.Z }).ToArray(), data.ToArray());
+        return list;
     }
 }

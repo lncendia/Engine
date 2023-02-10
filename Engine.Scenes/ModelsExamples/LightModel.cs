@@ -1,10 +1,11 @@
-using Engine.Scenes.Models;
-using Engine.Scenes.Shaders;
+using Engine.Scenes.Models.ColoredModel;
+using Engine.Scenes.Models.ColoredModel.ColorShader;
+using Engine.Scenes.Models.DefaultModel;
 using OpenTK.Mathematics;
 
 namespace Engine.Scenes.ModelsExamples;
 
-public class LightModel : Model
+public class LightModel : ColoredModel
 {
     private static float[] Vertex => new[]
     {
@@ -41,9 +42,9 @@ public class LightModel : Model
 
     private new static Dots Coordinates => new(Vertex, Indexes);
 
-    public new Shader Shader => base.Shader;
+    public new ColorShader Shader => (ColorShader) base.Shader;
 
-    public LightModel(Shader shader) : base(Coordinates, Vector3.One, shader)
+    public LightModel(ColorShader shader) : base(Coordinates, Vector3.One, shader)
     {
     }
 }

@@ -1,5 +1,6 @@
-using Engine.Scenes.Models;
-using Engine.Scenes.Shaders;
+using Engine.Scenes.Models.DefaultModel.DefaultShader;
+using Engine.Scenes.Models.LightedModel;
+using Engine.Scenes.Models.LightedModel.LightShader;
 
 namespace Engine.Scenes.ModelsExamples;
 
@@ -96,7 +97,7 @@ public class BoxModel : LightedModel
 
     public new Shader Shader => base.Shader;
 
-    public BoxModel(Material material, LightedShader shader) : base(Coordinates, material, shader)
+    public BoxModel(Material material, LightShader shader) : base(Coordinates, material, shader)
     {
     }
 }
