@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{A48AF141-D828-4BD0-9D02-04319A5184A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.Start", "Engine.Start\Engine.Start.csproj", "{A48AF141-D828-4BD0-9D02-04319A5184A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.Scenes", "Engine.Scenes\Engine.Scenes.csproj", "{6F50A472-0439-455A-9BF6-A353B731F91F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{6F50A472-0439-455A-9BF6-A353B731F91F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
